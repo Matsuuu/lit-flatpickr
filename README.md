@@ -1,5 +1,7 @@
 # lit-flatpickr
 
+[![npm version](https://badge.fury.io/js/lit-flatpickr.svg)](https://badge.fury.io/js/lit-flatpickr)
+
 [Flatpickr](https://github.com/flatpickr/flatpickr) for Lit Element
 
 ## Installation
