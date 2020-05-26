@@ -19,13 +19,22 @@ import 'lit-flatpickr';
 import { html, LitElement } from 'lit-element';
 
 class MyApp extends LitElement {
-
   getValue() {
-    this.shadowRoot.querySelector("#my-date-picker").
+    this.shadowRoot.querySelector('#my-date-picker').getValue();
   }
 
   render() {
-    return html` <lit-flatpickr id="my-date-picker" altInput altFormat="F j, Y" dateFormat="Y-m-d" theme="material_orange" minDate="2020-01" maxDate="2020-12-31"></lit-flatpickr> `;
+    return html`
+      <lit-flatpickr
+        id="my-date-picker"
+        altInput
+        altFormat="F j, Y"
+        dateFormat="Y-m-d"
+        theme="material_orange"
+        minDate="2020-01"
+        maxDate="2020-12-31"
+      ></lit-flatpickr>
+    `;
   }
 }
 ```
@@ -99,6 +108,7 @@ html`
 | `close`               | `(): void`                                                                                                                                                                                                                                                     |
 | `destroy`             | `(): void`                                                                                                                                                                                                                                                     |
 | `formatDate`          | `(dateObj: Date, formatStr: string): string`                                                                                                                                                                                                                   |
+| `getValue`            | `(): string`                                                                                                                                                                                                                                                   |
 | `getConfig`           | `(): ParsedOptions`                                                                                                                                                                                                                                            |
 | `getCurrentMonth`     | `(): number`                                                                                                                                                                                                                                                   |
 | `getCurrentYear`      | `(): number`                                                                                                                                                                                                                                                   |
