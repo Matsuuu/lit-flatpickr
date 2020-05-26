@@ -361,6 +361,8 @@ export class LitFlatpickr extends LitElement {
         display: block;
         cursor: text;
         background: #fff;
+        color: #000;
+        overflow: hidden;
       }
 
       input {
@@ -369,6 +371,10 @@ export class LitFlatpickr extends LitElement {
         font-size: inherit;
         cursor: inherit;
         background: inherit;
+        box-sizing: border-box;
+        outline: none;
+        color: inherit;
+        border: none;
       }
     `;
   }
