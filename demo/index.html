@@ -13,11 +13,17 @@
 
     <script type="module">
       import { html, render } from 'lit-html';
-      import '../dist/lit-flatpickr.js';
+      import '../dist/index.js';
 
       const title = 'Hello owc World!';
       render(
         html`
+          <style>
+            lit-flatpickr {
+              cursor: pointer;
+              font-size: 38px;
+            }
+          </style>
           <lit-flatpickr
             altInput
             altFormat="F j, Y"

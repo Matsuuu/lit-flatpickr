@@ -1,4 +1,4 @@
-import { html, LitElement, property, customElement } from 'lit-element';
+import { html, LitElement, property, customElement, css } from 'lit-element';
 import 'flatpickr';
 import { FlatpickrTheme } from './styles/Themes';
 import StyleLoader from './StyleLoader';
@@ -73,7 +73,7 @@ export class LitFlatpickr extends LitElement {
    *
    * Otherwise, you can supply a single Date object or a date string.
    * @prop
-   * @type {DateOption | DateOption[]}
+   * @type {DateOption|DateOption[]}
    * */
   @property({ type: Object })
   defaultDate?: DateOption | DateOption[];
@@ -355,6 +355,24 @@ export class LitFlatpickr extends LitElement {
   @property({ type: Object })
   _instance?: Instance;
 
+  static get styles() {
+    return css`
+      :host {
+        display: block;
+        cursor: text;
+        background: #fff;
+      }
+
+      input {
+        width: 100%;
+        height: 100%;
+        font-size: inherit;
+        cursor: inherit;
+        background: inherit;
+      }
+    `;
+  }
+
   firstUpdated() {
     this.init();
   }
@@ -508,6 +526,6 @@ export class LitFlatpickr extends LitElement {
   }
 
   render() {
-    return html` <input class="lit-flatpickr" /> `;
+    return html` <input class="lit-flatpickr flatpickr flatpickr-input" /> `;
   }
 }

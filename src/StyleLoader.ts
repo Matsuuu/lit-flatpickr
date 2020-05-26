@@ -6,10 +6,11 @@ export default class StyleLoader {
   }
 
   async initStyles(): Promise<void> {
-    const themeIsLoaded: boolean = this.isChosenThemeLoaded();
+    const themeUrl = getStyleRepository(this.theme);
+    const themeIsLoaded: boolean = this.isThemeLoaded(themeUrl);
     if (!themeIsLoaded) {
-      this.appendThemeStyles();
-      await this.waitForStyleToLoad();
+      this.appendThemeStyles(themeUrl);
+      await this.waitForStyleToLoad(() => this.isThemeLoaded(themeUrl));
     }
   }
 
@@ -17,10 +18,10 @@ export default class StyleLoader {
    * We want to prevent the styles from flickering, so we halt the
    * initialization process until the styles have been loaded
    * */
-  waitForStyleToLoad(): Promise<void> {
+  waitForStyleToLoad(checkFunction: Function): Promise<void> {
     return new Promise((resolve, reject) => {
       const checkIfStylesHaveLoaded = (iteration = 0) => {
-        if (this.isChosenThemeLoaded()) return resolve();
+        if (checkFunction()) return resolve();
         if (iteration > 10) {
           throw Error('Styles took too long to load, or were not able to be loaded');
           reject();
@@ -31,12 +32,11 @@ export default class StyleLoader {
     });
   }
 
-  isChosenThemeLoaded(): boolean {
-    const styleRepository: string = getStyleRepository(this.theme as FlatpickrTheme);
+  isThemeLoaded(themeUrl: string): boolean {
     const styleSheets: StyleSheetList = document.styleSheets;
     let styleSheetAlreadyImported = false;
     for (let i = 0; i < styleSheets.length; i += 1) {
-      if (styleSheets[i].href === styleRepository) {
+      if (styleSheets[i].href === themeUrl) {
         styleSheetAlreadyImported = true;
         break;
       }
@@ -44,11 +44,11 @@ export default class StyleLoader {
     return styleSheetAlreadyImported;
   }
 
-  appendThemeStyles(): void {
+  appendThemeStyles(themeUrl: string): void {
     const styleElem = document.createElement('link');
     styleElem.rel = 'stylesheet';
     styleElem.type = 'text/css';
-    styleElem.href = getStyleRepository(this.theme as FlatpickrTheme);
+    styleElem.href = themeUrl;
     document.head.append(styleElem);
   }
 }

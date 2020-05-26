@@ -28,6 +28,20 @@ class MyApp extends LitElement {
 }
 ```
 
+#### Styling the input component
+
+```js
+html`
+  <style>
+    lit-flatpickr {
+      cursor: pointer;
+      font-size: 38px;
+    }
+  </style>
+  <lit-flatpickr id="my-date-picker" altInput altFormat="F j, Y" dateFormat="Y-m-d" theme="material_orange" minDate="2020-01" maxDate="2020-12-31"></lit-flatpickr> `;
+`
+```
+
 ## Properties
 
 | Property                | Attribute               | Type                                                                                                                        | Default  | Description                                                                                                                                                                                                                                                                   |
