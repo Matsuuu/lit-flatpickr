@@ -1,4 +1,4 @@
-import { html, LitElement, property } from 'lit-element';
+import { html, LitElement, property, customElement } from 'lit-element';
 import 'flatpickr';
 import { FlatpickrTheme } from './styles/Themes';
 import StyleLoader from './StyleLoader';
@@ -8,6 +8,7 @@ import { Instance } from 'flatpickr/dist/types/instance';
 
 declare const flatpickr: any;
 
+@customElement('lit-flatpickr')
 export class LitFlatpickr extends LitElement {
   /**
    * Exactly the same as date format, but for the altInput field
@@ -500,6 +501,10 @@ export class LitFlatpickr extends LitElement {
   getConfig(): ParsedOptions {
     if (!this._instance) return {} as ParsedOptions;
     return this._instance.config;
+  }
+
+  getValue(): string {
+    return (this.shadowRoot?.querySelector('.lit-flatpickr') as HTMLInputElement).value;
   }
 
   render() {

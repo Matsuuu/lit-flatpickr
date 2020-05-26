@@ -1,11 +1,16 @@
 {
   "name": "lit-flatpickr",
-  "version": "0.0.0",
+  "version": "0.0.3",
   "description": "A Flatpickr port to Lit Element",
+  "repository": "https://github.com/Matsuuu/lit-flatpickr",
   "author": "Matsuuu",
   "license": "MIT",
-  "main": "index.js",
-  "module": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "dist/**/*",
+    "custom-elements.json"
+  ],
   "scripts": {
     "start": "concurrently --kill-others --names tsc,es-dev-server \"npm run tsc:watch\" \"es-dev-server --app-index demo/index.html --node-resolve --watch\"",
     "tsc:watch": "tsc --watch",
@@ -15,7 +20,8 @@
     "format:prettier": "prettier \"**/*.js\" \"**/*.ts\" --write --ignore-path .gitignore",
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "format": "npm run format:eslint && npm run format:prettier",
-    "analyze": "wca analyze --format json --outFile custom-elements.json"
+    "analyze": "wca analyze --format json --outFile custom-elements.json",
+    "build": "tsc --build tsconfig.json"
   },
   "dependencies": {
     "flatpickr": "^4.6.3",
