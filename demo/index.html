@@ -16,7 +16,15 @@
       import '../dist/lit-flatpickr.js';
 
       const title = 'Hello owc World!';
-      render(html` <lit-flatpickr> </lit-flatpickr> `, document.querySelector('#demo'));
+      render(html` <lit-flatpickr theme="material_orange"> </lit-flatpickr> `, document.querySelector('#demo'));
+    </script>
+
+    <button>Print info</button>
+
+    <script>
+      document.querySelector('button').addEventListener('click', () => {
+        const elem = document.querySelector('lit-flatpickr');
+      });
     </script>
   </body>
 </html>

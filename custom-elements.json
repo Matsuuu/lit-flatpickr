@@ -1,32 +1,526 @@
 {
-  "version": 2,
+  "version": "experimental",
   "tags": [
     {
       "name": "lit-flatpickr",
-      "description": "A component with a title and an action counter",
-      "properties": [
+      "path": "./lit-flatpickr.ts",
+      "attributes": [
         {
-          "name": "title",
-          "type": "String",
-          "description": "The title of your component",
-          "default": "Hey there"
+          "name": "altFormat",
+          "description": "Exactly the same as date format, but for the altInput field",
+          "type": "string",
+          "default": "\"F j, Y\""
         },
         {
-          "name": "counter",
-          "type": "Number",
-          "description": "An action counter",
-          "default": 0
+          "name": "altInput",
+          "description": "Show the user a readable date (as per altFormat), but return something totally different to the server.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "altInputClass",
+          "description": "This class will be added to the input element created by the altInput option.\nNote that altInput already inherits classes from the original input.",
+          "type": "string",
+          "default": "\"\""
+        },
+        {
+          "name": "allowInput",
+          "description": "Allows the user to enter a date directly input the input field. By default, direct entry is disabled.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "ariaDateFormat",
+          "description": "Defines how the date will be formatted in the aria-label for calendar days, using the same tokens as dateFormat.\nIf you change this, you should choose a value that will make sense if a screen reader reads it out loud",
+          "type": "string",
+          "default": "\"F j, Y\""
+        },
+        {
+          "name": "clickOpens",
+          "description": "Whether clicking on the input should open the picker.\nYou could disable this if you wish to open the calendar manually with.open()",
+          "type": "boolean",
+          "default": "true"
+        },
+        {
+          "name": "dateFormat",
+          "description": "A string of characters which are used to define how the date will be displayed in the input box.",
+          "type": "string",
+          "default": "\"Y-m-d\""
+        },
+        {
+          "name": "defaultDate",
+          "description": "Sets the initial selected date(s).\n\nIf you're using mode: \"multiple\" or a range calendar supply an Array of\nDate objects or an Array of date strings which follow your dateFormat.\n\nOtherwise, you can supply a single Date object or a date string.",
+          "type": "DateOption | DateOption[]"
+        },
+        {
+          "name": "defaultHour",
+          "description": "Initial value of the hour element.",
+          "type": "number",
+          "default": "12"
+        },
+        {
+          "name": "defaultMinute",
+          "description": "Initial value of the minute element.",
+          "type": "number",
+          "default": "0"
+        },
+        {
+          "name": "disable",
+          "description": "Dates selected to be unavailable for selection.",
+          "type": "DateLimit<DateOption>[]",
+          "default": "[]"
+        },
+        {
+          "name": "disableMobile",
+          "description": "Set disableMobile to true to always use the non-native picker.\nBy default, flatpickr utilizes native datetime widgets unless certain options (e.g. disable) are used.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "enable",
+          "description": "Dates selected to be available for selection.",
+          "type": "DateLimit<DateOption>[]",
+          "default": "[]"
+        },
+        {
+          "name": "enableTime",
+          "description": "Enables time picker",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "enableSeconds",
+          "description": "Enables seconds in the time picker",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "formatDateFn",
+          "description": "Allows using a custom date formatting function instead of the built-in\nhandling for date formats using dateFormat, altFormat, etc.\n\nFunction format: (date: Date, format: string, locale: Locale) => string",
+          "type": "((date: Date, format: string, locale: Locale) => string) | undefined"
+        },
+        {
+          "name": "hourIncrement",
+          "description": "Adjusts the step for the hour input (incl. scrolling)",
+          "type": "number",
+          "default": "1"
+        },
+        {
+          "name": "minuteIncrement",
+          "description": "Adjusts the step for the minute input (incl. scrolling)",
+          "type": "number",
+          "default": "5"
+        },
+        {
+          "name": "inline",
+          "description": "Displays the calendar inline",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "maxDate",
+          "description": "The maximum date that a user can pick to (inclusive).",
+          "type": "string | number | Date | undefined"
+        },
+        {
+          "name": "minDate",
+          "description": "The minimum date that a user can pick to (inclusive).",
+          "type": "string | number | Date | undefined"
+        },
+        {
+          "name": "mode",
+          "description": "\"single\", \"multiple\", or \"range\"",
+          "type": "\"single\" | \"multiple\" | \"range\"",
+          "default": "\"single\""
+        },
+        {
+          "name": "nextArrow",
+          "description": "HTML for the arrow icon, used to switch months.",
+          "type": "string",
+          "default": "\">\""
+        },
+        {
+          "name": "prevArrow",
+          "description": "HTML for the arrow icon, used to switch months.",
+          "type": "string",
+          "default": "\"<\""
+        },
+        {
+          "name": "noCalendar",
+          "description": "Hides the day selection in calendar.\nUse it along with enableTime to create a time picker.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "onChange",
+          "description": "Function(s) to trigger on every date selection",
+          "type": "Hook | undefined"
+        },
+        {
+          "name": "onClose",
+          "description": "Function(s) to trigger every time the calendar is closed",
+          "type": "Hook | undefined"
+        },
+        {
+          "name": "onOpen",
+          "description": "Function(s) to trigger every time the calendar is opened",
+          "type": "Hook | undefined"
+        },
+        {
+          "name": "onReady",
+          "description": "Function(s) to trigger when the calendar is ready",
+          "type": "Hook | undefined"
+        },
+        {
+          "name": "onMonthChange",
+          "description": "Function(s) to trigger every time the calendar month is changed by the user or programmatically",
+          "type": "Hook | undefined"
+        },
+        {
+          "name": "onYearChange",
+          "description": "Function(s) to trigger every time the calendar year is changed by the user or programmatically",
+          "type": "Hook | undefined"
+        },
+        {
+          "name": "onValueUpdate",
+          "description": "Function(s) to trigger when the input value is updated with a new date string",
+          "type": "Hook | undefined"
+        },
+        {
+          "name": "parseDateFn",
+          "description": "Function that expects a date string and must return a Date object.\n\nFunction format: (date: string, format: string) => string",
+          "type": "((date: string, format: string) => Date) | undefined"
+        },
+        {
+          "name": "position",
+          "description": "Where the calendar is rendered relative to the input",
+          "type": "\"auto\" | \"above\" | \"below\"",
+          "default": "\"auto\""
+        },
+        {
+          "name": "shorthandCurrentMonth",
+          "description": "Show the month using the shorthand version (ie, Sep instead of September)",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "showMonths",
+          "description": "The number of months showed",
+          "type": "number",
+          "default": "1"
+        },
+        {
+          "name": "static",
+          "description": "Position the calendar inside the wrapper and next to the input element",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "time_24hr",
+          "description": "Displays the time picker in 24 hour mode without AM/PM selection when enabled",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "weekNumbers",
+          "description": "Enabled display of week numbers in calendar",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "wrap",
+          "description": "flatpickr can parse an input group of textboxes and buttons, common in Bootstrap and other frameworks.\nThis permits additional markup, as well as custom elements to trigger the state of the calendar.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "theme",
+          "description": "The set theme of flatpickr.",
+          "type": " \"light\" | \"dark\" | \"material_blue\" | \"material_red\" | \"material_green\" | \"material_orange\" | \"airbnb\" | \"confetti\" ",
+          "default": "\"light\""
         }
       ],
-      "events": [],
-      "slots": [],
-      "cssProperties": [
+      "properties": [
         {
-          "name": "--lit-flatpickr-text-color",
-          "description": "Main Text Color",
-          "type": "Color"
+          "name": "altFormat",
+          "attribute": "altFormat",
+          "description": "Exactly the same as date format, but for the altInput field",
+          "type": "string",
+          "default": "\"F j, Y\""
+        },
+        {
+          "name": "altInput",
+          "attribute": "altInput",
+          "description": "Show the user a readable date (as per altFormat), but return something totally different to the server.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "altInputClass",
+          "attribute": "altInputClass",
+          "description": "This class will be added to the input element created by the altInput option.\nNote that altInput already inherits classes from the original input.",
+          "type": "string",
+          "default": "\"\""
+        },
+        {
+          "name": "allowInput",
+          "attribute": "allowInput",
+          "description": "Allows the user to enter a date directly input the input field. By default, direct entry is disabled.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "ariaDateFormat",
+          "attribute": "ariaDateFormat",
+          "description": "Defines how the date will be formatted in the aria-label for calendar days, using the same tokens as dateFormat.\nIf you change this, you should choose a value that will make sense if a screen reader reads it out loud",
+          "type": "string",
+          "default": "\"F j, Y\""
+        },
+        {
+          "name": "clickOpens",
+          "attribute": "clickOpens",
+          "description": "Whether clicking on the input should open the picker.\nYou could disable this if you wish to open the calendar manually with.open()",
+          "type": "boolean",
+          "default": "true"
+        },
+        {
+          "name": "dateFormat",
+          "attribute": "dateFormat",
+          "description": "A string of characters which are used to define how the date will be displayed in the input box.",
+          "type": "string",
+          "default": "\"Y-m-d\""
+        },
+        {
+          "name": "defaultDate",
+          "attribute": "defaultDate",
+          "description": "Sets the initial selected date(s).\n\nIf you're using mode: \"multiple\" or a range calendar supply an Array of\nDate objects or an Array of date strings which follow your dateFormat.\n\nOtherwise, you can supply a single Date object or a date string.",
+          "type": "DateOption | DateOption[]"
+        },
+        {
+          "name": "defaultHour",
+          "attribute": "defaultHour",
+          "description": "Initial value of the hour element.",
+          "type": "number",
+          "default": "12"
+        },
+        {
+          "name": "defaultMinute",
+          "attribute": "defaultMinute",
+          "description": "Initial value of the minute element.",
+          "type": "number",
+          "default": "0"
+        },
+        {
+          "name": "disable",
+          "attribute": "disable",
+          "description": "Dates selected to be unavailable for selection.",
+          "type": "DateLimit<DateOption>[]",
+          "default": "[]"
+        },
+        {
+          "name": "disableMobile",
+          "attribute": "disableMobile",
+          "description": "Set disableMobile to true to always use the non-native picker.\nBy default, flatpickr utilizes native datetime widgets unless certain options (e.g. disable) are used.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "enable",
+          "attribute": "enable",
+          "description": "Dates selected to be available for selection.",
+          "type": "DateLimit<DateOption>[]",
+          "default": "[]"
+        },
+        {
+          "name": "enableTime",
+          "attribute": "enableTime",
+          "description": "Enables time picker",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "enableSeconds",
+          "attribute": "enableSeconds",
+          "description": "Enables seconds in the time picker",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "formatDateFn",
+          "attribute": "formatDateFn",
+          "description": "Allows using a custom date formatting function instead of the built-in\nhandling for date formats using dateFormat, altFormat, etc.\n\nFunction format: (date: Date, format: string, locale: Locale) => string",
+          "type": "((date: Date, format: string, locale: Locale) => string) | undefined"
+        },
+        {
+          "name": "hourIncrement",
+          "attribute": "hourIncrement",
+          "description": "Adjusts the step for the hour input (incl. scrolling)",
+          "type": "number",
+          "default": "1"
+        },
+        {
+          "name": "minuteIncrement",
+          "attribute": "minuteIncrement",
+          "description": "Adjusts the step for the minute input (incl. scrolling)",
+          "type": "number",
+          "default": "5"
+        },
+        {
+          "name": "inline",
+          "attribute": "inline",
+          "description": "Displays the calendar inline",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "maxDate",
+          "attribute": "maxDate",
+          "description": "The maximum date that a user can pick to (inclusive).",
+          "type": "string | number | Date | undefined"
+        },
+        {
+          "name": "minDate",
+          "attribute": "minDate",
+          "description": "The minimum date that a user can pick to (inclusive).",
+          "type": "string | number | Date | undefined"
+        },
+        {
+          "name": "mode",
+          "attribute": "mode",
+          "description": "\"single\", \"multiple\", or \"range\"",
+          "type": "\"single\" | \"multiple\" | \"range\"",
+          "default": "\"single\""
+        },
+        {
+          "name": "nextArrow",
+          "attribute": "nextArrow",
+          "description": "HTML for the arrow icon, used to switch months.",
+          "type": "string",
+          "default": "\">\""
+        },
+        {
+          "name": "prevArrow",
+          "attribute": "prevArrow",
+          "description": "HTML for the arrow icon, used to switch months.",
+          "type": "string",
+          "default": "\"<\""
+        },
+        {
+          "name": "noCalendar",
+          "attribute": "noCalendar",
+          "description": "Hides the day selection in calendar.\nUse it along with enableTime to create a time picker.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "onChange",
+          "attribute": "onChange",
+          "description": "Function(s) to trigger on every date selection",
+          "type": "Hook | undefined"
+        },
+        {
+          "name": "onClose",
+          "attribute": "onClose",
+          "description": "Function(s) to trigger every time the calendar is closed",
+          "type": "Hook | undefined"
+        },
+        {
+          "name": "onOpen",
+          "attribute": "onOpen",
+          "description": "Function(s) to trigger every time the calendar is opened",
+          "type": "Hook | undefined"
+        },
+        {
+          "name": "onReady",
+          "attribute": "onReady",
+          "description": "Function(s) to trigger when the calendar is ready",
+          "type": "Hook | undefined"
+        },
+        {
+          "name": "onMonthChange",
+          "attribute": "onMonthChange",
+          "description": "Function(s) to trigger every time the calendar month is changed by the user or programmatically",
+          "type": "Hook | undefined"
+        },
+        {
+          "name": "onYearChange",
+          "attribute": "onYearChange",
+          "description": "Function(s) to trigger every time the calendar year is changed by the user or programmatically",
+          "type": "Hook | undefined"
+        },
+        {
+          "name": "onValueUpdate",
+          "attribute": "onValueUpdate",
+          "description": "Function(s) to trigger when the input value is updated with a new date string",
+          "type": "Hook | undefined"
+        },
+        {
+          "name": "parseDateFn",
+          "attribute": "parseDateFn",
+          "description": "Function that expects a date string and must return a Date object.\n\nFunction format: (date: string, format: string) => string",
+          "type": "((date: string, format: string) => Date) | undefined"
+        },
+        {
+          "name": "position",
+          "attribute": "position",
+          "description": "Where the calendar is rendered relative to the input",
+          "type": "\"auto\" | \"above\" | \"below\"",
+          "default": "\"auto\""
+        },
+        {
+          "name": "shorthandCurrentMonth",
+          "attribute": "shorthandCurrentMonth",
+          "description": "Show the month using the shorthand version (ie, Sep instead of September)",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "showMonths",
+          "attribute": "showMonths",
+          "description": "The number of months showed",
+          "type": "number",
+          "default": "1"
+        },
+        {
+          "name": "static",
+          "attribute": "static",
+          "description": "Position the calendar inside the wrapper and next to the input element",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "time_24hr",
+          "attribute": "time_24hr",
+          "description": "Displays the time picker in 24 hour mode without AM/PM selection when enabled",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "weekNumbers",
+          "attribute": "weekNumbers",
+          "description": "Enabled display of week numbers in calendar",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "wrap",
+          "attribute": "wrap",
+          "description": "flatpickr can parse an input group of textboxes and buttons, common in Bootstrap and other frameworks.\nThis permits additional markup, as well as custom elements to trigger the state of the calendar.",
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "theme",
+          "attribute": "theme",
+          "description": "The set theme of flatpickr.",
+          "type": " \"light\" | \"dark\" | \"material_blue\" | \"material_red\" | \"material_green\" | \"material_orange\" | \"airbnb\" | \"confetti\" ",
+          "default": "\"light\""
         }
       ]
+    },
+    {
+      "name": "lit-flatpickr",
+      "path": "./dist/lit-flatpickr.js"
     }
   ]
 }
