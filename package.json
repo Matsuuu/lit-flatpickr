@@ -1,6 +1,6 @@
 {
   "name": "lit-flatpickr",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A Flatpickr port to Lit Element",
   "repository": "https://github.com/Matsuuu/lit-flatpickr",
   "author": "Matsuuu",
@@ -26,7 +26,8 @@
   "dependencies": {
     "flatpickr": "^4.6.3",
     "lit-element": "^2.2.1",
-    "lit-html": "^1.1.2"
+    "lit-html": "^1.1.2",
+    "tslib": "^1.11.0"
   },
   "devDependencies": {
     "@open-wc/eslint-config": "^2.0.0",
@@ -40,7 +41,6 @@
     "husky": "^1.0.0",
     "lint-staged": "^8.0.0",
     "prettier": "^2.0.4",
-    "tslib": "^1.11.0",
     "typescript": "~3.8.2",
     "web-component-analyzer": "^1.0.3"
   },
