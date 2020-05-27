@@ -1,4 +1,4 @@
-import { html, LitElement, property, customElement, css } from 'lit-element';
+import { html, LitElement, property, customElement, css, PropertyValues } from 'lit-element';
 import 'flatpickr';
 import { FlatpickrTheme } from './styles/Themes';
 import StyleLoader from './StyleLoader';
@@ -352,12 +352,16 @@ export class LitFlatpickr extends LitElement {
   @property({ type: String })
   theme = 'light';
 
-  @property({ type: Object })
   _instance?: Instance;
+  _inputElement?: HTMLInputElement;
+
+  @property({ type: Boolean })
+  _hasSlottedElement = false;
 
   static get styles() {
     return css`
       :host {
+        width: fit-content;
         display: block;
         cursor: text;
         background: #fff;
@@ -380,14 +384,43 @@ export class LitFlatpickr extends LitElement {
   }
 
   firstUpdated() {
+    this._hasSlottedElement = this.checkForSlottedElement();
+  }
+
+  updated() {
+    // TODO: Might not need to init every time updated, but only
+    // when relevant stuff changes
     this.init();
+  }
+
+  checkForSlottedElement(): boolean {
+    const slottedElem = this.shadowRoot?.querySelector('slot');
+    // We don't want to think that a whitespace / line break is a node
+    const assignedNodes = slottedElem ? slottedElem.assignedNodes().filter(this.removeTextNodes) : [];
+
+    return slottedElem != null && assignedNodes && assignedNodes.length > 0;
+  }
+
+  getSlottedElement(): Element | undefined {
+    if (!this._hasSlottedElement) {
+      return undefined;
+    }
+    const slottedElem = this.shadowRoot?.querySelector('slot');
+    const slottedElemNodes: Array<Node> | undefined = slottedElem?.assignedNodes().filter(this.removeTextNodes);
+    if (!slottedElemNodes || slottedElemNodes.length < 1) {
+      return undefined;
+    }
+    return slottedElemNodes[0] as Element;
+  }
+
+  removeTextNodes(node: Node): boolean {
+    return node.nodeName !== '#text';
   }
 
   async init(): Promise<void> {
     const styleLoader = new StyleLoader(this.theme as FlatpickrTheme);
     await styleLoader.initStyles();
     this.initializeComponent();
-    this.getConfig();
   }
 
   getOptions(): Options {
@@ -437,8 +470,84 @@ export class LitFlatpickr extends LitElement {
   }
 
   initializeComponent(): void {
-    const inputElement = this.shadowRoot?.querySelector('.lit-flatpickr');
-    this._instance = flatpickr(inputElement, this.getOptions());
+    if (this._instance) {
+      if (Object.prototype.hasOwnProperty.call(this, 'destroy')) {
+        this._instance.destroy();
+      }
+    }
+
+    let inputElement: HTMLInputElement | null;
+    if (this._hasSlottedElement) {
+      // If lit-flatpickr has a slotted element, it means that
+      // the user wants to use their custom input.
+      inputElement = this.findInputField();
+    } else {
+      inputElement = this.shadowRoot?.querySelector('input') as HTMLInputElement;
+    }
+
+    if (inputElement) {
+      this._inputElement = inputElement as HTMLInputElement;
+      this._instance = flatpickr(inputElement, this.getOptions());
+    }
+  }
+
+  findInputField(): HTMLInputElement | null {
+    let inputElement: HTMLInputElement | null = null;
+    // First we check if the slotted element is just light dom HTML
+    inputElement = this.querySelector('input');
+    if (inputElement) {
+      return inputElement as HTMLInputElement;
+    }
+    // If not, we traverse down the slotted element's dom/shadow dom until we
+    // find a dead-end or an input
+    const slottedElement: Element | undefined = this.getSlottedElement();
+    if (typeof slottedElement !== undefined) {
+      inputElement = this.searchWebComponentForInputElement(slottedElement as Element);
+    }
+
+    return inputElement ? (inputElement as HTMLInputElement) : null;
+  }
+
+  /**
+   * Traverse the shadow dom tree and search for input from it
+   * and it's children
+   * */
+  searchWebComponentForInputElement(element: Element): HTMLInputElement | null {
+    let inputElement: HTMLInputElement | null = this.getInputFieldInElement(element);
+    if (inputElement) return inputElement;
+
+    const webComponentsInChildren = this.getWebComponentsInsideElement(element);
+    for (let i = 0; i < webComponentsInChildren.length; i++) {
+      inputElement = this.searchWebComponentForInputElement(webComponentsInChildren[i]);
+      if (inputElement) {
+        break;
+      }
+    }
+    return inputElement;
+  }
+
+  /**
+   * Check if said element's dom tree contains a input element
+   * */
+  getInputFieldInElement(element: Element): HTMLInputElement | null {
+    let inputElement: HTMLInputElement | null = null;
+    if (element.shadowRoot) {
+      inputElement = element.shadowRoot.querySelector('input');
+    } else {
+      inputElement = element.querySelector('input');
+    }
+    return inputElement;
+  }
+
+  getWebComponentsInsideElement(element: Element): Array<Element> {
+    if (element.shadowRoot) {
+      return [
+        ...Array.from(element.querySelectorAll('*')),
+        ...Array.from(element.shadowRoot.querySelectorAll('*')),
+      ].filter((elem: Element) => elem.shadowRoot);
+    } else {
+      return Array.from(element.querySelectorAll('*')).filter((elem: Element) => elem.shadowRoot);
+    }
   }
 
   changeMonth(monthNum: number, isOffset = true): void {
@@ -528,10 +637,14 @@ export class LitFlatpickr extends LitElement {
   }
 
   getValue(): string {
-    return (this.shadowRoot?.querySelector('.lit-flatpickr') as HTMLInputElement).value;
+    if (!this._inputElement) return '';
+    return this._inputElement.value;
   }
 
   render() {
-    return html` <input class="lit-flatpickr flatpickr flatpickr-input" /> `;
+    return html`
+      ${!this._hasSlottedElement ? html`<input class="lit-flatpickr flatpickr flatpickr-input" />` : html``}
+      <slot></slot>
+    `;
   }
 }

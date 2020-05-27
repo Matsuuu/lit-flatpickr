@@ -53,6 +53,26 @@ html`
 `
 ```
 
+#### Using your own custom input Web Component
+
+```js
+// Web Component
+html`
+  <lit-flatpickr>
+    <my-custom-input></my-custom-input>
+  </lit-flatpickr>
+`;
+
+// HTML
+html`
+  <lit-flatpickr>
+    <div>
+      <input />
+    </div>
+  </lit-flatpickr>
+`;
+```
+
 ## Properties
 
 | Property                | Attribute               | Type                                                                                                                        | Default  | Description                                                                                                                                                                                                                                                                   |

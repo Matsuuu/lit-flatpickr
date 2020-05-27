@@ -1,5 +1,7 @@
 import { getStyleRepository, FlatpickrTheme } from './styles/Themes';
 
+const themeUrlPrefix = 'https://npmcdn.com/flatpickr@4.6.3/dist/themes';
+
 export default class StyleLoader {
   constructor(public theme: FlatpickrTheme) {
     this.theme = theme;
@@ -7,10 +9,10 @@ export default class StyleLoader {
 
   async initStyles(): Promise<void> {
     const themeUrl = getStyleRepository(this.theme);
-    const themeIsLoaded: boolean = this.isThemeLoaded(themeUrl);
+    const themeIsLoaded: boolean = this.isThemeLoaded();
     if (!themeIsLoaded) {
       this.appendThemeStyles(themeUrl);
-      await this.waitForStyleToLoad(() => this.isThemeLoaded(themeUrl));
+      await this.waitForStyleToLoad(() => this.isThemeLoaded());
     }
   }
 
@@ -32,16 +34,9 @@ export default class StyleLoader {
     });
   }
 
-  isThemeLoaded(themeUrl: string): boolean {
-    const styleSheets: StyleSheetList = document.styleSheets;
-    let styleSheetAlreadyImported = false;
-    for (let i = 0; i < styleSheets.length; i += 1) {
-      if (styleSheets[i].href === themeUrl) {
-        styleSheetAlreadyImported = true;
-        break;
-      }
-    }
-    return styleSheetAlreadyImported;
+  isThemeLoaded(): boolean {
+    const styleSheetSources: Array<string | null> = Array.from(document.styleSheets).map(ss => ss.href);
+    return styleSheetSources.some(sss => sss != null && new RegExp(themeUrlPrefix).test(sss));
   }
 
   appendThemeStyles(themeUrl: string): void {

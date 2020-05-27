@@ -8,48 +8,48 @@
       }
     </style>
   </head>
+  <script type="module" src="/demo/custom-input.js"></script>
+  <script type="module" src="/demo/custom-nested-input.js"></script>
+  <script type="module" src="../dist/index.js"></script>
   <body>
-    <div id="demo"></div>
+    <p>With default input</p>
+    <lit-flatpickr
+      altInput
+      altFormat="F j, Y"
+      dateFormat="Y-m-d"
+      theme="material_orange"
+      minDate="2020-01"
+      maxDate="2020-12-31"
+    >
+    </lit-flatpickr>
 
-    <script type="module">
-      import { html, render } from 'lit-html';
-      import '../dist/index.js';
+    <p>With a custom input</p>
+    <lit-flatpickr
+      altInput
+      altFormat="F j, Y"
+      dateFormat="Y-m-d"
+      theme="material_orange"
+      minDate="2020-01"
+      maxDate="2020-12-31"
+    >
+      <div>
+        <input />
+      </div>
+    </lit-flatpickr>
 
-      const title = 'Hello owc World!';
-      render(
-        html`
-          <style>
-            lit-flatpickr {
-              cursor: pointer;
-              font-size: 38px;
-              padding: 0.25rem;
-              margin: 1rem 0 0 1rem;
-              width: 250px;
-              border-radius: 4px;
-              border: 1.5px solid #3c3c3c;
-            }
-          </style>
-          <lit-flatpickr
-            altInput
-            altFormat="F j, Y"
-            dateFormat="Y-m-d"
-            theme="material_orange"
-            minDate="2020-01"
-            maxDate="2020-12-31"
-          >
-          </lit-flatpickr>
-        `,
-        document.querySelector('#demo')
-      );
-    </script>
+    <p>With custom web component</p>
+    <lit-flatpickr>
+      <custom-input></custom-input>
+    </lit-flatpickr>
 
-    <button>Print info</button>
+    <p>With Custom nested web components</p>
+    <lit-flatpickr>
+      <first-level-input></first-level-input>
+    </lit-flatpickr>
 
-    <script>
-      document.querySelector('button').addEventListener('click', () => {
-        const elem = document.querySelector('lit-flatpickr');
-        console.log(elem.getValue());
-      });
-    </script>
+    <p>With Custom nested web components inserting to slots</p>
+    <lit-flatpickr>
+      <slotted-input> <custom-input></custom-input></slotted-input>
+    </lit-flatpickr>
   </body>
 </html>
