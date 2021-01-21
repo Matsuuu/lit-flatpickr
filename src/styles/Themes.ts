@@ -1,4 +1,4 @@
-const styleRepository = 'https://npmcdn.com/flatpickr@4.6.3/dist/themes/';
+const styleRepository = 'https://npmcdn.com/flatpickr@4.6.9/dist/themes/';
 
 export enum FlatpickrTheme {
   light = 'light',
