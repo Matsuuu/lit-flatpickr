@@ -1,11 +1,12 @@
-import { html, LitElement, property, customElement, css, PropertyValues } from 'lit-element';
+import { html, LitElement, property, customElement, css } from 'lit-element';
 import 'flatpickr';
 import { FlatpickrTheme } from './styles/Themes';
 import StyleLoader from './StyleLoader';
-import { DateLimit, DateOption, Hook, Options, BaseOptions, ParsedOptions } from 'flatpickr/dist/types/options';
+import { DateLimit, DateOption, Hook, Options, ParsedOptions } from 'flatpickr/dist/types/options';
 import { Locale } from 'flatpickr/dist/types/locale';
 import { Instance } from 'flatpickr/dist/types/instance';
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 declare const flatpickr: any;
 
 @customElement('lit-flatpickr')
@@ -117,7 +118,7 @@ export class LitFlatpickr extends LitElement {
    * @type DateLimit<DateOption>[]
    * */
   @property({ type: Array })
-  enable: DateLimit<DateOption>[] = [];
+  enable: DateLimit<DateOption>[] | undefined = undefined;
 
   /**
    * Enables time picker
@@ -347,7 +348,7 @@ export class LitFlatpickr extends LitElement {
   /**
    * The set theme of flatpickr.
    * @prop
-   * @type { "light" | "dark" | "material_blue" | "material_red" | "material_green" | "material_orange" | "airbnb" | "confetti" }
+   * @type { "light" | "dark" | "material_blue" | "material_red" | "material_green" | "material_orange" | "airbnb" | "confetti" }
    * */
   @property({ type: String })
   theme = 'light';
@@ -424,7 +425,8 @@ export class LitFlatpickr extends LitElement {
   }
 
   getOptions(): Options {
-    return {
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
+    const options = {
       altFormat: this.altFormat,
       altInput: this.altInput,
       altInputClass: this.altInputClass,
@@ -466,7 +468,11 @@ export class LitFlatpickr extends LitElement {
       time_24hr: this.time_24hr,
       weekNumbers: this.weekNumbers,
       wrap: this.wrap,
-    };
+    } as any;
+    Object.keys(options).forEach(key => {
+      if (options[key] === undefined) delete options[key];
+    });
+    return options;
   }
 
   initializeComponent(): void {
@@ -595,6 +601,7 @@ export class LitFlatpickr extends LitElement {
     this._instance.redraw();
   }
 
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   set(
     option:
       | keyof Options
