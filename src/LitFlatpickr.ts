@@ -12,6 +12,11 @@ declare const flatpickr: any;
 @customElement('lit-flatpickr')
 export class LitFlatpickr extends LitElement {
   /**
+   * Placeholder text for input element provided by lit-flatpickr
+   * */
+  @property({ type: String })
+  placeholder = '';
+  /**
    * Exactly the same as date format, but for the altInput field
    * @prop
    * @type string
@@ -650,7 +655,9 @@ export class LitFlatpickr extends LitElement {
 
   render() {
     return html`
-      ${!this._hasSlottedElement ? html`<input class="lit-flatpickr flatpickr flatpickr-input" />` : html``}
+      ${!this._hasSlottedElement
+        ? html`<input class="lit-flatpickr flatpickr flatpickr-input" placeholder=${this.placeholder} />`
+        : html``}
       <slot></slot>
     `;
   }

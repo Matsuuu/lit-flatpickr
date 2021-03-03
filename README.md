@@ -14,6 +14,9 @@ npm install lit-flatpickr
 
 ## Usage
 
+It is highly recommended that you use lit-flatpickr as a wrapper for your own custom input elements, to provide the
+best User experience for the users.
+
 ```js
 import 'lit-flatpickr';
 import { html, LitElement } from 'lit-element';
