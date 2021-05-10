@@ -9,6 +9,7 @@ export enum FlatpickrTheme {
   materialRed = 'material_red',
   airbnb = 'airbnb',
   confetti = 'confetti',
+  none = 'none',
 }
 
 export function getStyleRepository(theme: FlatpickrTheme): string {

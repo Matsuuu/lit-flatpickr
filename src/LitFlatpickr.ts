@@ -353,7 +353,7 @@ export class LitFlatpickr extends LitElement {
   /**
    * The set theme of flatpickr.
    * @prop
-   * @type { "light" | "dark" | "material_blue" | "material_red" | "material_green" | "material_orange" | "airbnb" | "confetti" }
+   * @type { "light" | "dark" | "material_blue" | "material_red" | "material_green" | "material_orange" | "airbnb" | "confetti" | "none" }
    * */
   @property({ type: String })
   theme = 'light';
