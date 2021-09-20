@@ -5,7 +5,6 @@ import StyleLoader from './StyleLoader';
 import { DateLimit, DateOption, Hook, Options, ParsedOptions } from 'flatpickr/dist/types/options';
 import { Locale } from 'flatpickr/dist/types/locale';
 import { Instance } from 'flatpickr/dist/types/instance';
-import LocaleLoader from './locale/LocaleLoader';
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 declare const flatpickr: any;
@@ -365,22 +364,6 @@ export class LitFlatpickr extends LitElement {
   @property({ type: Boolean })
   _hasSlottedElement = false;
 
-  /**
-   * Localization of the calendar
-   * @prop
-   * @type { "ar" | "at" | "az" | "be" | "bg" | "bn" | "bs" | "ca" | "cat" | "cs" | "cy" | "da" | "de" | "en" | "eo" | "es" | "et" | "fa" | "fi" | "fo" | "fr" | "gr" | "he" | "hi" | "hr" | "hu" | "id" | "is" | "it" | "ja" | "ka" | "ko" | "km" | "kz" | "lt" | "lv" | "mk" | "mn" | "ms" | "my" | "nl" | "no" | "pa" | "pl" | "pt" | "ro" | "ru" | "si" | "sk" | "sl" | "sq" | "sr" | "sv" | "th" | "tr" | "uk" | "vn" | "zh" | "uz" | "uz_latn" | "zh_tw" }
-   */
-  @property({ type: String })
-  locale = 'en';
-
-  /**
-   * Localization object of the calendar
-   * @prop
-   * @type CustomLocale
-   */
-  @property({ type: Object })
-  localeObj = {};
-
   static get styles() {
     return css`
       :host {
@@ -443,8 +426,6 @@ export class LitFlatpickr extends LitElement {
   async init(): Promise<void> {
     const styleLoader = new StyleLoader(this.theme as FlatpickrTheme);
     await styleLoader.initStyles();
-    const localeLoader = new LocaleLoader(this.locale);
-    this.localeObj = await localeLoader.initializeLocale();
     this.initializeComponent();
   }
 
@@ -492,7 +473,6 @@ export class LitFlatpickr extends LitElement {
       time_24hr: this.time_24hr,
       weekNumbers: this.weekNumbers,
       wrap: this.wrap,
-      locale: this.localeObj,
     } as any;
     Object.keys(options).forEach(key => {
       if (options[key] === undefined) delete options[key];
