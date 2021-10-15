@@ -19,7 +19,7 @@ best User experience for the users.
 
 ```js
 import 'lit-flatpickr';
-import { html, LitElement } from 'lit-element';
+import { html, LitElement } from 'lit';
 
 class MyApp extends LitElement {
   getValue() {

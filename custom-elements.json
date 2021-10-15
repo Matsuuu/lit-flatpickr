@@ -89,7 +89,7 @@
         {
           "name": "disable",
           "description": "Dates selected to be unavailable for selection.",
-          "type": "array",
+          "type": "DateLimit<DateOption>[]",
           "default": "[]"
         },
         {
@@ -101,7 +101,7 @@
         {
           "name": "enable",
           "description": "Dates selected to be available for selection.",
-          "type": "any[] | undefined",
+          "type": "DateLimit<DateOption>[] | undefined",
           "default": "\"undefined\""
         },
         {
@@ -119,7 +119,7 @@
         {
           "name": "formatDateFn",
           "description": "Allows using a custom date formatting function instead of the built-in\nhandling for date formats using dateFormat, altFormat, etc.\n\nFunction format: (date: Date, format: string, locale: Locale) => string",
-          "type": "((date: Date, format: string, locale: any) => string) | undefined"
+          "type": "((date: Date, format: string, locale: Locale) => string) | undefined"
         },
         {
           "name": "hourIncrement",
@@ -141,11 +141,13 @@
         },
         {
           "name": "maxDate",
-          "description": "The maximum date that a user can pick to (inclusive)."
+          "description": "The maximum date that a user can pick to (inclusive).",
+          "type": "string | number | Date | undefined"
         },
         {
           "name": "minDate",
-          "description": "The minimum date that a user can pick to (inclusive)."
+          "description": "The minimum date that a user can pick to (inclusive).",
+          "type": "string | number | Date | undefined"
         },
         {
           "name": "mode",
@@ -173,31 +175,38 @@
         },
         {
           "name": "onChange",
-          "description": "Function(s) to trigger on every date selection"
+          "description": "Function(s) to trigger on every date selection",
+          "type": "Hook | undefined"
         },
         {
           "name": "onClose",
-          "description": "Function(s) to trigger every time the calendar is closed"
+          "description": "Function(s) to trigger every time the calendar is closed",
+          "type": "Hook | undefined"
         },
         {
           "name": "onOpen",
-          "description": "Function(s) to trigger every time the calendar is opened"
+          "description": "Function(s) to trigger every time the calendar is opened",
+          "type": "Hook | undefined"
         },
         {
           "name": "onReady",
-          "description": "Function(s) to trigger when the calendar is ready"
+          "description": "Function(s) to trigger when the calendar is ready",
+          "type": "Hook | undefined"
         },
         {
           "name": "onMonthChange",
-          "description": "Function(s) to trigger every time the calendar month is changed by the user or programmatically"
+          "description": "Function(s) to trigger every time the calendar month is changed by the user or programmatically",
+          "type": "Hook | undefined"
         },
         {
           "name": "onYearChange",
-          "description": "Function(s) to trigger every time the calendar year is changed by the user or programmatically"
+          "description": "Function(s) to trigger every time the calendar year is changed by the user or programmatically",
+          "type": "Hook | undefined"
         },
         {
           "name": "onValueUpdate",
-          "description": "Function(s) to trigger when the input value is updated with a new date string"
+          "description": "Function(s) to trigger when the input value is updated with a new date string",
+          "type": "Hook | undefined"
         },
         {
           "name": "parseDateFn",
@@ -334,7 +343,7 @@
           "name": "disable",
           "attribute": "disable",
           "description": "Dates selected to be unavailable for selection.",
-          "type": "array",
+          "type": "DateLimit<DateOption>[]",
           "default": "[]"
         },
         {
@@ -348,7 +357,7 @@
           "name": "enable",
           "attribute": "enable",
           "description": "Dates selected to be available for selection.",
-          "type": "any[] | undefined",
+          "type": "DateLimit<DateOption>[] | undefined",
           "default": "\"undefined\""
         },
         {
@@ -369,7 +378,7 @@
           "name": "formatDateFn",
           "attribute": "formatDateFn",
           "description": "Allows using a custom date formatting function instead of the built-in\nhandling for date formats using dateFormat, altFormat, etc.\n\nFunction format: (date: Date, format: string, locale: Locale) => string",
-          "type": "((date: Date, format: string, locale: any) => string) | undefined"
+          "type": "((date: Date, format: string, locale: Locale) => string) | undefined"
         },
         {
           "name": "hourIncrement",
@@ -395,12 +404,14 @@
         {
           "name": "maxDate",
           "attribute": "maxDate",
-          "description": "The maximum date that a user can pick to (inclusive)."
+          "description": "The maximum date that a user can pick to (inclusive).",
+          "type": "string | number | Date | undefined"
         },
         {
           "name": "minDate",
           "attribute": "minDate",
-          "description": "The minimum date that a user can pick to (inclusive)."
+          "description": "The minimum date that a user can pick to (inclusive).",
+          "type": "string | number | Date | undefined"
         },
         {
           "name": "mode",
@@ -433,37 +444,44 @@
         {
           "name": "onChange",
           "attribute": "onChange",
-          "description": "Function(s) to trigger on every date selection"
+          "description": "Function(s) to trigger on every date selection",
+          "type": "Hook | undefined"
         },
         {
           "name": "onClose",
           "attribute": "onClose",
-          "description": "Function(s) to trigger every time the calendar is closed"
+          "description": "Function(s) to trigger every time the calendar is closed",
+          "type": "Hook | undefined"
         },
         {
           "name": "onOpen",
           "attribute": "onOpen",
-          "description": "Function(s) to trigger every time the calendar is opened"
+          "description": "Function(s) to trigger every time the calendar is opened",
+          "type": "Hook | undefined"
         },
         {
           "name": "onReady",
           "attribute": "onReady",
-          "description": "Function(s) to trigger when the calendar is ready"
+          "description": "Function(s) to trigger when the calendar is ready",
+          "type": "Hook | undefined"
         },
         {
           "name": "onMonthChange",
           "attribute": "onMonthChange",
-          "description": "Function(s) to trigger every time the calendar month is changed by the user or programmatically"
+          "description": "Function(s) to trigger every time the calendar month is changed by the user or programmatically",
+          "type": "Hook | undefined"
         },
         {
           "name": "onYearChange",
           "attribute": "onYearChange",
-          "description": "Function(s) to trigger every time the calendar year is changed by the user or programmatically"
+          "description": "Function(s) to trigger every time the calendar year is changed by the user or programmatically",
+          "type": "Hook | undefined"
         },
         {
           "name": "onValueUpdate",
           "attribute": "onValueUpdate",
-          "description": "Function(s) to trigger when the input value is updated with a new date string"
+          "description": "Function(s) to trigger when the input value is updated with a new date string",
+          "type": "Hook | undefined"
         },
         {
           "name": "parseDateFn",
