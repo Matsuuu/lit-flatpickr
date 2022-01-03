@@ -373,32 +373,34 @@ export class LitFlatpickr extends LitElement {
   _hasSlottedElement = false;
 
   static get styles() {
-    return css`
-      :host {
-        width: fit-content;
-        display: block;
-        cursor: pointer;
-        background: #fff;
-        color: #000;
-        overflow: hidden;
-      }
+    return [
+      css`
+        :host {
+          width: fit-content;
+          display: block;
+          cursor: pointer;
+          background: #fff;
+          color: #000;
+          overflow: hidden;
+        }
 
-      ::slotted(*) {
-        cursor: pointer;
-      }
+        ::slotted(*) {
+          cursor: pointer;
+        }
 
-      input {
-        width: 100%;
-        height: 100%;
-        font-size: inherit;
-        cursor: pointer;
-        background: inherit;
-        box-sizing: border-box;
-        outline: none;
-        color: inherit;
-        border: none;
-      }
-    `;
+        input {
+          width: 100%;
+          height: 100%;
+          font-size: inherit;
+          cursor: pointer;
+          background: inherit;
+          box-sizing: border-box;
+          outline: none;
+          color: inherit;
+          border: none;
+        }
+      `,
+    ];
   }
 
   firstUpdated() {
