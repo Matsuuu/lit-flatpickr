@@ -6,6 +6,7 @@ import StyleLoader from './StyleLoader';
 import { DateLimit, DateOption, Hook, Options, ParsedOptions } from 'flatpickr/dist/types/options';
 import { Locale } from 'flatpickr/dist/types/locale';
 import { Instance } from 'flatpickr/dist/types/instance';
+import { loadLocale } from './LocaleLoader';
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 declare const flatpickr: any;
@@ -359,6 +360,12 @@ export class LitFlatpickr extends LitElement {
   @property({ type: String })
   theme = 'light';
 
+  @property({ type: Number })
+  firstDayOfWeek = 1;
+
+  @property({ type: String })
+  locale: string | undefined;
+
   _instance?: Instance;
   _inputElement?: HTMLInputElement;
 
@@ -370,17 +377,21 @@ export class LitFlatpickr extends LitElement {
       :host {
         width: fit-content;
         display: block;
-        cursor: text;
+        cursor: pointer;
         background: #fff;
         color: #000;
         overflow: hidden;
+      }
+
+      ::slotted(*) {
+        cursor: pointer;
       }
 
       input {
         width: 100%;
         height: 100%;
         font-size: inherit;
-        cursor: inherit;
+        cursor: pointer;
         background: inherit;
         box-sizing: border-box;
         outline: none;
@@ -427,6 +438,9 @@ export class LitFlatpickr extends LitElement {
   async init(): Promise<void> {
     const styleLoader = new StyleLoader(this.theme as FlatpickrTheme);
     await styleLoader.initStyles();
+    if (this.locale) {
+      await loadLocale(this.locale);
+    }
     this.initializeComponent();
   }
 
@@ -474,6 +488,7 @@ export class LitFlatpickr extends LitElement {
       time_24hr: this.time_24hr,
       weekNumbers: this.weekNumbers,
       wrap: this.wrap,
+      locale: this.locale,
     } as any;
     Object.keys(options).forEach(key => {
       if (options[key] === undefined) delete options[key];
@@ -499,6 +514,7 @@ export class LitFlatpickr extends LitElement {
 
     if (inputElement) {
       this._inputElement = inputElement as HTMLInputElement;
+      flatpickr.l10ns.default.firstDayOfWeek = this.firstDayOfWeek;
       this._instance = flatpickr(inputElement, this.getOptions());
     }
   }
