@@ -366,6 +366,9 @@ export class LitFlatpickr extends LitElement {
   @property({ type: String })
   locale: string | undefined;
 
+  @property({ type: Boolean, attribute: 'default-to-today' })
+  defaultToToday = false;
+
   _instance?: Instance;
   _inputElement?: HTMLInputElement;
 
@@ -413,6 +416,12 @@ export class LitFlatpickr extends LitElement {
     this.init();
   }
 
+  getToday() {
+    const today = new Date();
+    const dateString = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+    return dateString;
+  }
+
   checkForSlottedElement(): boolean {
     const slottedElem = this.shadowRoot?.querySelector('slot');
     // We don't want to think that a whitespace / line break is a node
@@ -456,7 +465,7 @@ export class LitFlatpickr extends LitElement {
       ariaDateFormat: this.ariaDateFormat,
       clickOpens: this.clickOpens,
       dateFormat: this.dateFormat,
-      defaultDate: this.defaultDate,
+      defaultDate: this.defaultToToday ? this.getToday() : this.defaultDate,
       defaultHour: this.defaultHour,
       defaultMinute: this.defaultMinute,
       disable: this.disable,
