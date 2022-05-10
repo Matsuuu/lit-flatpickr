@@ -260,6 +260,20 @@
           "description": "The set theme of flatpickr.",
           "type": " \"light\" | \"dark\" | \"material_blue\" | \"material_red\" | \"material_green\" | \"material_orange\" | \"airbnb\" | \"confetti\" | \"none\" ",
           "default": "\"light\""
+        },
+        {
+          "name": "firstDayOfWeek",
+          "type": "number",
+          "default": "1"
+        },
+        {
+          "name": "locale",
+          "type": "string | undefined"
+        },
+        {
+          "name": "default-to-today",
+          "type": "boolean",
+          "default": "false"
         }
       ],
       "properties": [
@@ -544,6 +558,23 @@
           "description": "The set theme of flatpickr.",
           "type": " \"light\" | \"dark\" | \"material_blue\" | \"material_red\" | \"material_green\" | \"material_orange\" | \"airbnb\" | \"confetti\" | \"none\" ",
           "default": "\"light\""
+        },
+        {
+          "name": "firstDayOfWeek",
+          "attribute": "firstDayOfWeek",
+          "type": "number",
+          "default": "1"
+        },
+        {
+          "name": "locale",
+          "attribute": "locale",
+          "type": "string | undefined"
+        },
+        {
+          "name": "defaultToToday",
+          "attribute": "default-to-today",
+          "type": "boolean",
+          "default": "false"
         }
       ]
     }
