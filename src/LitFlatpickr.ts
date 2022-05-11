@@ -373,6 +373,9 @@ export class LitFlatpickr extends LitElement {
   @property({ type: Boolean, attribute: 'week-select' })
   weekSelect = false;
 
+  @property({ type: Boolean, attribute: 'confirm-date' })
+  confirmDate = false;
+
   _instance?: Instance;
   _inputElement?: HTMLInputElement;
 
