@@ -7,6 +7,7 @@ import { DateLimit, DateOption, Hook, Options, ParsedOptions } from 'flatpickr/d
 import { Locale } from 'flatpickr/dist/types/locale';
 import { Instance } from 'flatpickr/dist/types/instance';
 import { loadLocale } from './LocaleLoader';
+import { loadPlugins } from './plugins/PluginLoader';
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 declare const flatpickr: any;
@@ -369,6 +370,9 @@ export class LitFlatpickr extends LitElement {
   @property({ type: Boolean, attribute: 'default-to-today' })
   defaultToToday = false;
 
+  @property({ type: Boolean, attribute: 'week-select' })
+  weekSelect = false;
+
   _instance?: Instance;
   _inputElement?: HTMLInputElement;
 
@@ -452,12 +456,12 @@ export class LitFlatpickr extends LitElement {
     if (this.locale) {
       await loadLocale(this.locale);
     }
-    this.initializeComponent();
+    await this.initializeComponent();
   }
 
-  getOptions(): Options {
+  async getOptions(): Promise<Options> {
     /* eslint-disable  @typescript-eslint/no-explicit-any */
-    const options = {
+    let options = {
       altFormat: this.altFormat,
       altInput: this.altInput,
       altInputClass: this.altInputClass,
@@ -500,14 +504,16 @@ export class LitFlatpickr extends LitElement {
       weekNumbers: this.weekNumbers,
       wrap: this.wrap,
       locale: this.locale,
+      plugins: [],
     } as any;
+    options = await loadPlugins(this, options);
     Object.keys(options).forEach(key => {
       if (options[key] === undefined) delete options[key];
     });
     return options;
   }
 
-  initializeComponent(): void {
+  async initializeComponent(): Promise<void> {
     if (this._instance) {
       if (Object.prototype.hasOwnProperty.call(this, 'destroy')) {
         this._instance.destroy();
@@ -526,7 +532,8 @@ export class LitFlatpickr extends LitElement {
     if (inputElement) {
       this._inputElement = inputElement as HTMLInputElement;
       flatpickr.l10ns.default.firstDayOfWeek = this.firstDayOfWeek;
-      this._instance = flatpickr(inputElement, this.getOptions());
+      const options = await this.getOptions();
+      this._instance = flatpickr(inputElement, options);
     }
   }
 
