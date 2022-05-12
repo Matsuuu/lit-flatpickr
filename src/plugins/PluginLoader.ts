@@ -9,10 +9,8 @@ export async function loadPlugins(instance: LitFlatpickr, options: any) {
       ...options,
       plugins: [...options.plugins, weekSelectPlugin()],
       onChange: function () {
-        // @ts-ignore
         const weekNumber = this.selectedDates[0] ? this.config.getWeek(this.selectedDates[0]) : null;
-        console.log(weekNumber);
-        // TODO: Set the weeknumber to the input value
+        this.input.value = weekNumber;
       },
     };
   }
