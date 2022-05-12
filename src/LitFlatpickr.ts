@@ -197,7 +197,7 @@ export class LitFlatpickr extends LitElement {
   minDate?: DateOption;
 
   /**
-   * "single", "multiple", or "range"
+   * "single", "multiple", "time" or "range"
    * @prop
    * @type {"single" | "multiple" | "range"}
    * */
