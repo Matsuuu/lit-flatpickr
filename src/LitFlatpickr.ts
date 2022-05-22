@@ -538,9 +538,20 @@ export class LitFlatpickr extends LitElement {
     if (inputElement) {
       this._inputElement = inputElement as HTMLInputElement;
       flatpickr.l10ns.default.firstDayOfWeek = this.firstDayOfWeek;
-      const options = await this.getOptions();
-      this._instance = flatpickr(inputElement, options);
+      this.createInstance();
     }
+  }
+
+  async getInstance() {
+    if (!this._instance) {
+      await this.createInstance();
+    }
+    return this._instance;
+  }
+
+  async createInstance() {
+    const options = await this.getOptions();
+    this._instance = flatpickr(this._inputElement, options);
   }
 
   findInputField(): HTMLInputElement | null {
@@ -602,49 +613,48 @@ export class LitFlatpickr extends LitElement {
     }
   }
 
-  changeMonth(monthNum: number, isOffset = true): void {
-    if (!this._instance) return;
-    this._instance.changeMonth(monthNum, isOffset);
+  async changeMonth(monthNum: number, isOffset = true) {
+    const instance = await this.getInstance();
+    instance?.changeMonth(monthNum, isOffset);
   }
 
-  clear(): void {
-    if (!this._instance) return;
-    this._instance.clear();
+  async clear() {
+    const instance = await this.getInstance();
+    instance?.clear();
   }
 
-  close(): void {
-    if (!this._instance) return;
-    this._instance.close();
+  async close() {
+    const instance = await this.getInstance();
+    instance?.close();
   }
 
-  destroy(): void {
-    if (!this._instance) return;
-    this._instance.destroy();
+  async destroy() {
+    const instance = await this.getInstance();
+    instance?.destroy();
+    this._instance = undefined;
   }
 
   formatDate(dateObj: Date, formatStr: string): string {
-    if (!this._instance) return '';
-    return this._instance.formatDate(dateObj, formatStr);
+    return this._instance?.formatDate(dateObj, formatStr) ?? '';
   }
 
-  jumpToDate(date: Date, triggerChange: boolean) {
-    if (!this._instance) return;
-    this._instance.jumpToDate(date, triggerChange);
+  async jumpToDate(date: Date, triggerChange: boolean) {
+    const instance = await this.getInstance();
+    return instance?.jumpToDate(date, triggerChange);
   }
 
-  open(): void {
-    if (!this._instance) return;
-    this._instance.open();
+  async open() {
+    const instance = await this.getInstance();
+    return instance?.open();
   }
 
   parseDate(dateStr: string, dateFormat: string): Date | undefined {
-    if (!this._instance) return undefined;
-    return this._instance.parseDate(dateStr, dateFormat);
+    return this._instance?.parseDate(dateStr, dateFormat);
   }
 
-  redraw(): void {
-    if (!this._instance) return;
-    this._instance.redraw();
+  async redraw() {
+    const instance = await this.getInstance();
+    return instance?.open();
   }
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -661,37 +671,32 @@ export class LitFlatpickr extends LitElement {
   }
 
   setDate(date: DateOption | DateOption[], triggerChange: boolean, dateStrFormat: string): void {
-    if (!this._instance) return;
-    this._instance.setDate(date, triggerChange, dateStrFormat);
+    this._instance?.setDate(date, triggerChange, dateStrFormat);
   }
 
   toggle(): void {
     if (!this._instance) return;
+    this._instance?.toggle();
   }
 
   getSelectedDates(): Array<Date> {
-    if (!this._instance) return [];
-    return this._instance.selectedDates;
+    return this._instance?.selectedDates ?? [];
   }
 
   getCurrentYear(): number {
-    if (!this._instance) return -1;
-    return this._instance.currentYear;
+    return this._instance?.currentYear ?? -1;
   }
 
   getCurrentMonth(): number {
-    if (!this._instance) return -1;
-    return this._instance.currentMonth;
+    return this._instance?.currentMonth ?? -1;
   }
 
   getConfig(): ParsedOptions {
-    if (!this._instance) return {} as ParsedOptions;
-    return this._instance.config;
+    return this._instance?.config ?? ({} as ParsedOptions);
   }
 
   getValue(): string {
-    if (!this._inputElement) return '';
-    return this._inputElement.value;
+    return this._inputElement?.value ?? '';
   }
 
   render() {
