@@ -76,6 +76,14 @@ html`
 `;
 ```
 
+#### Define your own CDN source
+
+```javascript
+import { setCDNBase } from 'lit-flatpickr/src/CdnManager.js';
+
+setCDNBase('https://unpkg.com/flatpickr@4.6.13/dist/');
+```
+
 ## Properties
 
 | Property                | Attribute               | Type                                                                                                                                  | Default  | Description                                                                                                                                                                                                                                                                   |
