@@ -1,6 +1,5 @@
 import { getStyleRepository, FlatpickrTheme } from './styles/Themes';
-
-const themeUrlPrefix = 'https://npmcdn.com/flatpickr@4.6.9/dist/themes';
+import { getCDNBase } from './CdnManager';
 
 export default class StyleLoader {
   constructor(public theme: FlatpickrTheme) {
@@ -39,7 +38,7 @@ export default class StyleLoader {
     if (this.theme === FlatpickrTheme.none) return true;
 
     const styleSheetSources: Array<string | null> = Array.from(document.styleSheets).map(ss => ss.href);
-    return styleSheetSources.some(sss => sss != null && new RegExp(themeUrlPrefix).test(sss));
+    return styleSheetSources.some(sss => sss != null && new RegExp(getCDNBase() + 'themes').test(sss));
   }
 
   appendThemeStyles(themeUrl: string): void {

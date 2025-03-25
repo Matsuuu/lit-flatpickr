@@ -1,11 +1,10 @@
 import { LitFlatpickr } from '../LitFlatpickr';
-
-const pluginUrlPrefix = 'https://npmcdn.com/flatpickr@4.6.9/dist';
+import { getCDNBase } from '../CdnManager';
 
 export async function loadPlugins(instance: LitFlatpickr, options: any) {
   if (instance.weekSelect) {
     // @ts-ignore
-    const weekSelectPluginImport = await import(pluginUrlPrefix + '/esm/plugins/weekSelect/weekSelect.js');
+    const weekSelectPluginImport = await import(getCDNBase() + 'esm/plugins/weekSelect/weekSelect.js');
     const weekSelectPlugin = weekSelectPluginImport.default;
     options = {
       ...options,
@@ -19,7 +18,7 @@ export async function loadPlugins(instance: LitFlatpickr, options: any) {
 
   if (instance.monthSelect) {
     // @ts-ignore
-    const monthSelectPluginImport = await import(pluginUrlPrefix + '/esm/plugins/monthSelect/index.js');
+    const monthSelectPluginImport = await import(getCDNBase() + 'esm/plugins/monthSelect/index.js');
     const monthSelectPlugin = monthSelectPluginImport.default;
     options = {
       ...options,
@@ -34,7 +33,7 @@ export async function loadPlugins(instance: LitFlatpickr, options: any) {
     };
     const styles = document.createElement('link');
     styles.rel = 'stylesheet';
-    styles.href = pluginUrlPrefix + '/plugins/monthSelect/style.css';
+    styles.href = getCDNBase() + 'plugins/monthSelect/style.css';
     document.head.appendChild(styles);
   }
 

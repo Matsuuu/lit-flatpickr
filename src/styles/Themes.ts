@@ -1,4 +1,4 @@
-const styleRepository = 'https://npmcdn.com/flatpickr@4.6.9/dist/themes/';
+import { getCDNBase } from '../CdnManager';
 
 export enum FlatpickrTheme {
   light = 'light',
@@ -13,5 +13,5 @@ export enum FlatpickrTheme {
 }
 
 export function getStyleRepository(theme: FlatpickrTheme): string {
-  return `${styleRepository}${theme}.css`;
+  return `${getCDNBase()}themes/${theme}.css`;
 }
